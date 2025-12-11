@@ -1,13 +1,14 @@
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import useMembers from "../hooks/useMember";
 
 const Members = () => {
   const { members, loading, addMember } = useMembers();
 
   const [formData, setFormData] = useState({
-    name: "John Doe",
-    number: "08123456789",
-    address: "Jakarta",
+    fullName: "",
+    number: "",
+    address: "",
     image: "",
     gender: "M",
   });
@@ -19,14 +20,22 @@ const Members = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    addMember(formData);
-    // Reset form
+    await addMember(formData);
+
+    Swal.fire({
+      title: "Success!",
+      text: "Member has been added.",
+      icon: "success",
+      timer: 1500,
+      showConfirmButton: false,
+    });
+
     setFormData({
-      name: "John Doe",
-      number: "08123456789",
-      address: "Jakarta",
+      fullName: "",
+      number: "",
+      address: "",
       image: "",
       gender: "M",
     });
@@ -38,108 +47,111 @@ const Members = () => {
 
   return (
     <div className="p-4 space-y-6">
-      {/* Form */}
-      <div className="bg-base-200 p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-4">Add Member</h2>
+      {/* FORM */}
+      <div className="bg-base-200 p-3">
+        <h2 className="text-lg font-semibold mb-4">Add Member</h2>
+
         <form className="space-y-4" onSubmit={handleSubmit}>
-          <div className="flex flex-col md:flex-row md:space-x-4">
+          {/* NAME */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Full Name</span>
+            </label>
             <input
               type="text"
-              name="name"
-              placeholder="Name"
-              value={formData.name}
+              name="fullName"
+              placeholder="Enter full name"
+              value={formData.fullName}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="input input-bordered border-base-300 w-full"
             />
+          </div>
+
+          {/* NUMBER */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Number</span>
+            </label>
             <input
               type="text"
               name="number"
-              placeholder="Number"
+              placeholder="Enter number"
               value={formData.number}
               onChange={handleChange}
-              className="input input-bordered w-full"
+              className="input input-bordered border-base-300 w-full"
             />
           </div>
 
-          <div className="flex flex-col md:flex-row md:space-x-4">
-            <input
-              type="text"
-              name="address"
-              placeholder="Address"
-              value={formData.address}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-            />
-            <input
-              type="text"
-              name="image"
-              placeholder="Image URL"
-              value={formData.image}
-              onChange={handleChange}
-              className="input input-bordered w-full"
-            />
-          </div>
-
-          <div className="flex items-center space-x-4">
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="gender"
-                value="M"
-                checked={formData.gender === "M"}
-                onChange={handleChange}
-                className="radio"
-              />
-              <span>M</span>
+          {/* GENDER */}
+          <div className="form-control">
+            <label className="label">
+              <span className="label-text">Gender</span>
             </label>
-            <label className="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="gender"
-                value="F"
-                checked={formData.gender === "F"}
-                onChange={handleChange}
-                className="radio"
-              />
-              <span>F</span>
-            </label>
+            <div className="flex gap-6">
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="M"
+                  checked={formData.gender === "M"}
+                  onChange={handleChange}
+                  className="radio radio-sm"
+                />
+                <span>Male</span>
+              </label>
+
+              <label className="flex items-center gap-2">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="F"
+                  checked={formData.gender === "F"}
+                  onChange={handleChange}
+                  className="radio radio-sm"
+                />
+                <span>Female</span>
+              </label>
+            </div>
           </div>
 
+          {/* SUBMIT */}
           <button
             type="submit"
             className="btn btn-primary"
-            disabled={!formData.name || !formData.number}
+            disabled={!formData.fullName || !formData.number}
           >
             Add Member
           </button>
         </form>
       </div>
 
-      {/* Members Table */}
-      <div className="bg-base-200 p-4 rounded-lg shadow-md">
-        <h2 className="text-xl font-bold mb-4">Members List</h2>
+      <hr />
 
-        {/* Filter */}
-        <div className="flex space-x-2 mb-4">
+      {/* TABLE */}
+      <div className="bg-base-200 p-3 rounded-xl shadow-sm">
+        <h2 className="text-lg font-semibold mb-4">Members List</h2>
+
+        {/* FILTER */}
+        <div className="flex gap-2 mb-4">
           <button
-            className={`btn btn-sm ${
-              filterGender === "" ? "btn-primary" : "btn-ghost"
+            className={`btn btn-xs ${
+              filterGender === "" ? "btn-primary" : "btn-outline"
             }`}
             onClick={() => setFilterGender("")}
           >
             All
           </button>
           <button
-            className={`btn btn-sm ${
-              filterGender === "M" ? "btn-primary" : "btn-ghost"
+            className={`btn btn-xs ${
+              filterGender === "M" ? "btn-primary" : "btn-outline"
             }`}
             onClick={() => setFilterGender("M")}
           >
             Male
           </button>
           <button
-            className={`btn btn-sm ${
-              filterGender === "F" ? "btn-primary" : "btn-ghost"
+            className={`btn btn-xs ${
+              filterGender === "F" ? "btn-primary" : "btn-outline"
             }`}
             onClick={() => setFilterGender("F")}
           >
@@ -151,32 +163,24 @@ const Members = () => {
           <p>Loading members...</p>
         ) : (
           <div className="overflow-x-auto">
-            <table className="table table-zebra table-compact w-full">
+            <table className="table w-full border border-base-100 py-3 px-2">
               <thead>
-                <tr>
-                  <th>Name</th>
-                  <th>Number</th>
-                  <th>Address</th>
-                  <th>Gender</th>
-                  <th>Image</th>
+                <tr className="bg-base-100 text-sm">
+                  <th className="border border-base-100">Name</th>
+                  <th className="border border-base-100">Number</th>
+                  <th className="border border-base-100">Gender</th>
+                  <th className="border border-base-100">Address</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredMembers.map((member) => (
                   <tr key={member.id}>
-                    <td>{member.name}</td>
-                    <td>{member.number}</td>
-                    <td>{member.address}</td>
-                    <td>{member.gender}</td>
-                    <td>
-                      {member.image && (
-                        <img
-                          src={member.image}
-                          alt={member.name}
-                          className="w-12 h-12 rounded-full"
-                        />
-                      )}
+                    <td className="border border-base-100">
+                      {member.fullName}
                     </td>
+                    <td className="border border-base-100">{member.number}</td>
+                    <td className="border border-base-100">{member.gender}</td>
+                    <td className="border border-base-100">{member.address}</td>
                   </tr>
                 ))}
               </tbody>

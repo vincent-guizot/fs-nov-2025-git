@@ -8,7 +8,7 @@ const useMembers = () => {
   const fetchMembers = async () => {
     try {
       setLoading(true);
-      const res = await axios.get("http://localhost:4000/members");
+      const res = await axios.get("http://localhost:4000/participants");
       setMembers(res.data);
     } catch (err) {
       console.error(err);
@@ -19,7 +19,7 @@ const useMembers = () => {
 
   const addMember = async (member) => {
     try {
-      await axios.post("http://localhost:4000/members", member);
+      await axios.post("http://localhost:4000/participants", member);
       fetchMembers(); // refresh data
     } catch (err) {
       console.error(err);
