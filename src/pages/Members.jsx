@@ -107,7 +107,6 @@ const Members = () => {
                   <th className="border border-gray-300 px-3 py-2">Name</th>
                   <th className="border border-gray-300 px-3 py-2">Number</th>
                   <th className="border border-gray-300 px-3 py-2">Gender</th>
-                  <th className="border border-gray-300 px-3 py-2">Address</th>
                 </tr>
               </thead>
               <tbody>
@@ -124,9 +123,6 @@ const Members = () => {
                     </td>
                     <td className="border border-gray-300 px-3 py-2">
                       {member.gender}
-                    </td>
-                    <td className="border border-gray-300 px-3 py-2">
-                      {member.address}
                     </td>
                   </tr>
                 ))}
