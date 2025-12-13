@@ -195,6 +195,7 @@ const Members = () => {
             <table className="w-full border border-gray-300 text-sm">
               <thead className="bg-gray-200">
                 <tr>
+                  <th className="border border-gray-300 px-3 py-2">Id</th>
                   <th className="border border-gray-300 px-3 py-2">Name</th>
                   <th className="border border-gray-300 px-3 py-2">Number</th>
                   <th className="border border-gray-300 px-3 py-2">Gender</th>
@@ -204,6 +205,9 @@ const Members = () => {
               <tbody>
                 {filteredMembers.map((member) => (
                   <tr key={member.id} className="hover:bg-gray-50">
+                    <td className="border border-gray-300 px-3 py-2">
+                      {member.id}
+                    </td>
                     <td className="border border-gray-300 px-3 py-2">
                       {member.fullName}
                     </td>

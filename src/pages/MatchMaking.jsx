@@ -62,7 +62,7 @@ const MatchMaking = () => {
     }
 
     const payload = {
-      fromNumber: p1Number,
+      fromNumber: +p1Number,
       toNumbers: p2Selection.map((m) => m.number),
     };
 
