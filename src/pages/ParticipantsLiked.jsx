@@ -73,7 +73,8 @@ const ParticipantsLiked = () => {
               {likesData.map((row) => (
                 <tr key={row._id} className="hover:bg-gray-50 transition">
                   <td className="border px-3 py-2">
-                    {row.number} - {row.fullName} ({row.gender})
+                    {row.number}
+                    {row.gender === "M" ? "M" : "W"} - {row.fullName}
                   </td>
                   <td className="border px-3 py-2">
                     {row.likes.length === 0 ? (

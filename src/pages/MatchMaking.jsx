@@ -89,7 +89,7 @@ const MatchMaking = () => {
               : "bg-white hover:bg-pink-50"
           }`}
         >
-          <FaFemale /> Female
+          <FaFemale /> Woman
         </button>
       </div>
 
