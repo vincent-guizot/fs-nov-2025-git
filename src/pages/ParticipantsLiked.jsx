@@ -43,24 +43,25 @@ const ParticipantsLiked = () => {
     fetchLikes();
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className="text-center p-4">Loading...</p>;
 
   return (
-    <div className="p-6 space-y-4">
-      <h2 className="text-2xl font-bold text-blue-700">
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-4">
+      <h2 className="text-xl sm:text-2xl font-bold text-blue-700 text-center">
         Participant yang Sudah Memilih
       </h2>
-
-      <p className="text-sm text-gray-500">
+      <p className="text-sm sm:text-base text-gray-500 text-center">
         Menampilkan participant yang telah memilih pasangan beserta daftar
         pilihan mereka.
       </p>
 
       {likesData.length === 0 ? (
-        <p className="text-gray-500">Belum ada participant yang memilih.</p>
+        <p className="text-gray-500 text-center mt-4">
+          Belum ada participant yang memilih.
+        </p>
       ) : (
-        <div className="overflow-x-auto">
-          <table className="w-full border text-sm">
+        <div className="overflow-x-auto mt-2">
+          <table className="min-w-[500px] w-full border border-gray-300 text-sm sm:text-base rounded-lg overflow-hidden">
             <thead className="bg-gray-200">
               <tr>
                 <th className="border px-3 py-2 text-left">Participant</th>
@@ -68,16 +69,12 @@ const ParticipantsLiked = () => {
                 <th className="border px-3 py-2 text-center">Action</th>
               </tr>
             </thead>
-
             <tbody>
               {likesData.map((row) => (
-                <tr key={row._id} className="hover:bg-gray-50">
-                  {/* PARTICIPANT */}
+                <tr key={row._id} className="hover:bg-gray-50 transition">
                   <td className="border px-3 py-2">
                     {row.number} - {row.fullName} ({row.gender})
                   </td>
-
-                  {/* LIKES */}
                   <td className="border px-3 py-2">
                     {row.likes.length === 0 ? (
                       <span className="text-gray-400">No likes</span>
@@ -87,12 +84,10 @@ const ParticipantsLiked = () => {
                         .join(", ")
                     )}
                   </td>
-
-                  {/* ACTION */}
                   <td className="border px-3 py-2 text-center">
                     <button
                       onClick={() => deleteLike(row._id, row.fullName)}
-                      className="px-3 py-1 text-xs bg-red-600 text-white rounded hover:bg-red-700"
+                      className="px-3 py-1 text-xs sm:text-sm bg-red-600 text-white rounded hover:bg-red-700 transition"
                     >
                       Delete
                     </button>

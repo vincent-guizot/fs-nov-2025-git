@@ -57,80 +57,54 @@ const Members = () => {
     : members;
 
   return (
-    <div className="p-4 space-y-6">
-      {/* FORM */}
+    <div className="p-4 sm:p-6 max-w-4xl mx-auto space-y-6">
+      <h2 className="text-xl sm:text-2xl font-bold text-green-700 text-center">
+        Members List
+      </h2>
 
-      {/* TABLE */}
-      <div className="p-4 rounded-lg">
-        <h2 className="text-lg font-semibold mb-4 text-green-700">
-          Members List
-        </h2>
-
-        {/* Filter Buttons */}
-        <div className="flex gap-2 mb-4">
+      {/* Filter Buttons */}
+      <div className="flex flex-wrap justify-center gap-2 mb-4">
+        {["", "M", "F"].map((g) => (
           <button
-            className={`px-3 py-1 text-sm border rounded-md ${
-              filterGender === "" ? "bg-blue-600 text-white" : "bg-white"
+            key={g}
+            onClick={() => setFilterGender(g)}
+            className={`px-3 py-1 text-sm sm:text-base border rounded-md ${
+              filterGender === g ? "bg-blue-600 text-white" : "bg-white"
             }`}
-            onClick={() => setFilterGender("")}
           >
-            All
+            {g === "" ? "All" : g === "M" ? "Male" : "Female"}
           </button>
-
-          <button
-            className={`px-3 py-1 text-sm border rounded-md ${
-              filterGender === "M" ? "bg-blue-600 text-white" : "bg-white"
-            }`}
-            onClick={() => setFilterGender("M")}
-          >
-            Male
-          </button>
-
-          <button
-            className={`px-3 py-1 text-sm border rounded-md ${
-              filterGender === "F" ? "bg-blue-600 text-white" : "bg-white"
-            }`}
-            onClick={() => setFilterGender("F")}
-          >
-            Female
-          </button>
-        </div>
-
-        {loading ? (
-          <p>Loading members...</p>
-        ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full border border-gray-300 text-sm">
-              <thead className="bg-gray-200">
-                <tr>
-                  {/* <th className="border border-gray-300 px-3 py-2">Id</th> */}
-                  <th className="border border-gray-300 px-3 py-2">Name</th>
-                  <th className="border border-gray-300 px-3 py-2">Number</th>
-                  <th className="border border-gray-300 px-3 py-2">Gender</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filteredMembers.map((member) => (
-                  <tr key={member.id} className="hover:bg-gray-50">
-                    {/* <td className="border border-gray-300 px-3 py-2">
-                      {member.id}
-                    </td> */}
-                    <td className="border border-gray-300 px-3 py-2">
-                      {member.fullName}
-                    </td>
-                    <td className="border border-gray-300 px-3 py-2">
-                      {member.number}
-                    </td>
-                    <td className="border border-gray-300 px-3 py-2">
-                      {member.gender}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        ))}
       </div>
+
+      {/* Members Table */}
+      {loading ? (
+        <p className="text-center">Loading members...</p>
+      ) : (
+        <div className="overflow-x-auto">
+          <table className="min-w-[400px] w-full border border-gray-300 text-sm sm:text-base rounded-lg overflow-hidden">
+            <thead className="bg-gray-200">
+              <tr>
+                <th className="border px-3 py-2 text-left">Name</th>
+                <th className="border px-3 py-2 text-left">Number</th>
+                <th className="border px-3 py-2 text-left">Gender</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredMembers.map((member) => (
+                <tr
+                  key={member.id || member._id}
+                  className="hover:bg-gray-50 transition"
+                >
+                  <td className="border px-3 py-2">{member.fullName}</td>
+                  <td className="border px-3 py-2">{member.number}</td>
+                  <td className="border px-3 py-2">{member.gender}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
     </div>
   );
 };
